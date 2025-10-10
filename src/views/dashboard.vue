@@ -1,7 +1,5 @@
 <template>
-  <div>Hello, dashboard.</div>
+  <a-button type="primary" loading />
 </template>
 
 <script setup></script>
-
-<style lang="scss" scoped></style>
