@@ -6,12 +6,7 @@
       <div class="p-4">
         <h2 class="text-xl font-bold">Logo</h2>
       </div>
-      <div class="mx-3">
-        <ul class="menu bg-base-200 rounded-box w-56">
-          <li><a>Tutores</a></li>
-          <li><a>Pets</a></li>
-        </ul>
-      </div>
+      <menu-lateral />
     </div>
 
     <!-- Conteúdo Principal -->
@@ -51,6 +46,7 @@
 
 <script setup>
 import { RouterView } from "vue-router";
+import menuLateral from "@/components/menuLateral.vue";
 </script>
 
 <style lang="scss" scoped></style>
