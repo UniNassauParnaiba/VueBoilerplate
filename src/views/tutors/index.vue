@@ -29,7 +29,7 @@
           </thead>
           <tbody>
             <!-- row 1 -->
-            <tr v-for="tutor in tutores" :key="tutor.nome">
+            <tr v-for="tutor in tutores" :key="tutor.id">
               <th>
                 <label>
                   <input type="checkbox" class="checkbox" />
@@ -54,11 +54,22 @@
                 </div>
               </td>
               <td>
-                Zemlak, Daniel and Leannon
+                {{ tutor.endereco.logradouro }} {{ tutor.endereco.numero ?? "S/N" }}
+                {{ tutor.endereco.cep }} {{ tutor.endereco.complemento }}
                 <br />
-                <span class="badge badge-ghost badge-sm">Desktop Support Technician</span>
+                <span class="badge badge-ghost badge-sm"
+                  >{{ tutor.endereco.cidade }}/{{ tutor.endereco.estado }}</span
+                >
               </td>
-              <td>Purple</td>
+              <td>
+                <div
+                  v-for="telefone in tutor.telefones"
+                  :key="telefone"
+                  class="badge badge-xs badge-dash flex m-1"
+                >
+                  {{ telefone }}
+                </div>
+              </td>
               <th>
                 <button class="btn btn-ghost btn-xs">details</button>
               </th>
@@ -73,51 +84,52 @@
 
 <script setup>
 import breadcrumbs from "@/components/breadcrumbs.vue";
+import { ref } from "vue";
 
-const tutores = [
+const tutores = ref([
   {
     id: 1,
     nome: "Luiz Lins",
     endereco: {
-      logradouro: null,
-      numero: null,
-      bairro: null,
-      cep: null,
+      logradouro: "Rua B",
+      numero: 78,
+      bairro: "Cristo Rei",
+      cep: "64215-730",
       complemento: null,
       cidade: "Parnaiba",
-      estado: null,
+      estado: "Piauí",
     },
-    telefone: ["(86)999692453", "(86)999692488"],
+    telefones: ["(86)999692453", "(86)999692488"],
   },
   {
     id: 2,
     nome: "Carlos Alberto",
     endereco: {
-      logradouro: null,
-      numero: null,
-      bairro: null,
-      cep: null,
-      complemento: null,
-      cidade: null,
-      estado: null,
+      logradouro: "Rua B",
+      numero: 78,
+      bairro: "Cristo Rei",
+      cep: "64215-730",
+      complemento: "Próximo da esquina alta",
+      cidade: "Parnaiba",
+      estado: "Piauí",
     },
-    telefone: ["(86)988119726", "(86)988116677"],
+    telefones: ["(86)988119726", "(86)988116677"],
   },
   {
     id: 3,
     nome: "José Ricardo",
     endereco: {
-      logradouro: null,
-      numero: null,
-      bairro: null,
-      cep: null,
+      logradouro: "Rua B",
+      numero: 78,
+      bairro: "Cristo Rei",
+      cep: "64215-730",
       complemento: null,
-      cidade: null,
-      estado: null,
+      cidade: "Parnaiba",
+      estado: "Piauí",
     },
-    telefone: ["(86)988119726", "(86)988116677"],
+    telefones: ["(86)988119726", "(86)988116677", "(86)22335566"],
   },
-];
+]);
 </script>
 
 <style lang="scss" scoped></style>
