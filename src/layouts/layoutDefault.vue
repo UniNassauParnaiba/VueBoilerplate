@@ -3,9 +3,7 @@
   <div class="flex">
     <!-- Sidebar (Menu Lateral) -->
     <div class="w-64">
-      <div class="p-4">
-        <h2 class="text-xl font-bold">Logo</h2>
-      </div>
+      <logo />
       <menu-lateral />
     </div>
 
@@ -14,7 +12,7 @@
       <!-- Navbar Superior -->
       <div class="navbar bg-base-300 shadow">
         <div class="flex-1">
-          <a class="mx-4 text-xl">Meu App</a>
+          <a class="mx-4 text-xl font-light">PetClinic - Clínica Veterinária</a>
         </div>
         <div class="flex-none">
           <button class="btn btn-square btn-ghost">
@@ -47,6 +45,7 @@
 <script setup>
 import { RouterView } from "vue-router";
 import menuLateral from "@/components/menuLateral.vue";
+import logo from "@/components/logo.vue";
 </script>
 
 <style lang="scss" scoped></style>
