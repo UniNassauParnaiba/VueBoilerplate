@@ -1,5 +1,5 @@
 <template>
-  <div>add edit.html</div>
+  <div>add.html</div>
 </template>
 
 <script setup></script>
