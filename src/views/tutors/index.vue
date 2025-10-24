@@ -10,7 +10,7 @@
       <div class="overflow-x-auto">
         <div class="flex">
           <div class="flex-1 mb-5 text-2xl">Tutores</div>
-          <button class="btn btn-second">Adicionar</button>
+          <button class="btn btn-second" @click="adicionar">Adicionar</button>
         </div>
         <table class="table">
           <!-- head -->
@@ -84,52 +84,27 @@
 
 <script setup>
 import breadcrumbs from "@/components/breadcrumbs.vue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import Localbase from "localbase";
 
-const tutores = ref([
-  {
-    id: 1,
-    nome: "Luiz Lins",
-    endereco: {
-      logradouro: "Rua B",
-      numero: 78,
-      bairro: "Cristo Rei",
-      cep: "64215-730",
-      complemento: null,
-      cidade: "Parnaiba",
-      estado: "Piauí",
-    },
-    telefones: ["(86)999692453", "(86)999692488"],
-  },
-  {
-    id: 2,
-    nome: "Carlos Alberto",
-    endereco: {
-      logradouro: "Rua B",
-      numero: 78,
-      bairro: "Cristo Rei",
-      cep: "64215-730",
-      complemento: "Próximo da esquina alta",
-      cidade: "Parnaiba",
-      estado: "Piauí",
-    },
-    telefones: ["(86)988119726", "(86)988116677"],
-  },
-  {
-    id: 3,
-    nome: "José Ricardo",
-    endereco: {
-      logradouro: "Rua B",
-      numero: 78,
-      bairro: "Cristo Rei",
-      cep: "64215-730",
-      complemento: null,
-      cidade: "Parnaiba",
-      estado: "Piauí",
-    },
-    telefones: ["(86)988119726", "(86)988116677", "(86)22335566"],
-  },
-]);
+let db;
+onMounted(() => {
+  db = new Localbase("db");
+  capturarTutores();
+});
+
+const tutores = ref([]);
+
+const capturarTutores = async () => {
+  tutores.value = await db.collection("tutores").get();
+};
+
+const router = useRouter();
+
+const adicionar = () => {
+  router.push({ name: "tutors.add" });
+};
 </script>
 
 <style lang="scss" scoped></style>
