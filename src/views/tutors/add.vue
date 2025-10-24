@@ -37,14 +37,29 @@
       <label class="label">Estado</label>
       <input type="text" class="input w-full" placeholder="Estado" v-model="form.estado" />
 
-      <button class="btn btn-neutral mt-4">Adicionar</button>
+      <button class="btn btn-neutral mt-4" @click="adicionarTutor">Adicionar</button>
     </fieldset>
+    <div class="toast" v-if="toastVisible">
+      <div class="alert alert-info">
+        <span
+          ><strong>{{ nomeCompletoToast }}</strong> salvo com sucesso.</span
+        >
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { reactive } from "vue";
+import { ref, reactive, onMounted } from "vue";
+import Localbase from "localbase";
 
+let db;
+onMounted(() => {
+  db = new Localbase("db");
+});
+
+const toastVisible = ref(false);
+const nomeCompletoToast = ref("");
 const form = reactive({
   nomeCompleto: "",
   logradouro: "",
@@ -55,6 +70,39 @@ const form = reactive({
   cidade: "",
   estado: "",
 });
+
+const adicionarTutor = async () => {
+  try {
+    await db.collection("tutores").add({
+      nome: form.nomeCompleto,
+      endereco: {
+        logradouro: form.logradouro,
+        numero: form.numero,
+        bairro: form.bairro,
+        cep: form.cep,
+        complemento: form.complemento,
+        cidade: form.cidade,
+        estado: form.estado,
+      },
+      telefones: [],
+    });
+    console.log("Tutor adicionado com sucesso!");
+    nomeCompletoToast.value = form.nomeCompleto;
+    toastVisible.value = true;
+  } catch (error) {
+    console.error("Erro ao adicionar tutor:", error);
+  } finally {
+    // Limpar o formulário após a adição
+    form.nomeCompleto = "";
+    form.logradouro = "";
+    form.numero = "";
+    form.bairro = "";
+    form.cep = "";
+    form.complemento = "";
+    form.cidade = "";
+    form.estado = "";
+  }
+};
 </script>
 
 <style lang="scss" scoped></style>
