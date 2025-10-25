@@ -35,13 +35,23 @@
 
     <button class="btn btn-neutral mt-4" @click="adicionarTutor">Adicionar</button>
   </fieldset>
+
+  <div class="toast" v-if="toastVisivel">
+    <div class="alert alert-info">
+      <span>{{ toastMesagem }}</span>
+    </div>
+  </div>
 </template>
 
 <script setup>
-import { reactive, onMounted } from "vue";
+import { reactive, onMounted, ref } from "vue";
 import Localbase from "localbase";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 let db = null;
+let toastVisivel = ref(false);
+let toastMesagem = ref(null);
 
 onMounted(() => {
   db = new Localbase("clinica-veterinaria");
@@ -60,17 +70,34 @@ const form = reactive({
 });
 
 function adicionarTutor() {
-  db.collection("tutores").add({
-    nome: form.nomeCompleto,
-    endereco: {
-      cep: form.endereco.cep,
-      bairro: form.endereco.bairro,
-      numero: form.endereco.numero,
-      logradouro: form.endereco.logradouro,
-      cidade: form.endereco.cidade,
-      estado: form.endereco.estado,
-    },
-  });
+  db.collection("tutores")
+    .add({
+      nome: form.nomeCompleto,
+      endereco: {
+        cep: form.endereco.cep,
+        bairro: form.endereco.bairro,
+        numero: form.endereco.numero,
+        logradouro: form.endereco.logradouro,
+        cidade: form.endereco.cidade,
+        estado: form.endereco.estado,
+      },
+    })
+    .then(() => {
+      // Limpar o formulário após a adição
+      toastMesagem.value = `Tutor ${form.nomeCompleto} adicionado com sucesso!`;
+      form.nomeCompleto = null;
+      form.endereco.cep = null;
+      form.endereco.bairro = null;
+      form.endereco.numero = null;
+      form.endereco.logradouro = null;
+      form.endereco.cidade = null;
+      form.endereco.estado = null;
+      toastVisivel.value = true;
+      setTimeout(() => {
+        toastVisivel.value = false;
+        router.push("/tutors");
+      }, 3000);
+    });
 }
 </script>
 

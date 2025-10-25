@@ -10,7 +10,7 @@
       <div class="overflow-x-auto">
         <div class="flex">
           <div class="flex-1 mb-5 text-2xl">Tutores</div>
-          <button class="btn btn-second">Adicionar</button>
+          <button class="btn btn-second" @click="adicionar">Adicionar</button>
         </div>
         <table class="table">
           <!-- head -->
@@ -71,48 +71,27 @@
 
 <script setup>
 import breadcrumbs from "@/components/breadcrumbs.vue";
+import Localbase from "localbase";
+import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
 
-const tutores = [
-  {
-    id: 1,
-    nome: "Luiz Lins",
-    endereco: {
-      cep: null,
-      numero: null,
-      logradouro: null,
-      complemento: null,
-      bairro: null,
-      cidade: null,
-    },
-    contato: ["(86)99969-2453", "(86)33225544"],
-  },
-  {
-    id: 2,
-    nome: "Maria Ires",
-    endereco: {
-      cep: null,
-      numero: null,
-      logradouro: null,
-      complemento: null,
-      bairro: null,
-      cidade: null,
-    },
-    contato: ["(86)99969-0011"],
-  },
-  {
-    id: 3,
-    nome: "João Abilio",
-    endereco: {
-      cep: null,
-      numero: null,
-      logradouro: null,
-      complemento: null,
-      bairro: null,
-      cidade: null,
-    },
-    contato: ["(86)99969-0011"],
-  },
-];
+const router = useRouter();
+
+let db = null;
+onMounted(() => {
+  db = new Localbase("clinica-veterinaria");
+  capturarTutores();
+});
+
+const tutores = ref([]);
+
+const adicionar = () => {
+  router.push({ name: "tutors.add" });
+};
+
+const capturarTutores = async () => {
+  tutores.value = await db.collection("tutores").get();
+};
 </script>
 
 <style lang="scss" scoped></style>
