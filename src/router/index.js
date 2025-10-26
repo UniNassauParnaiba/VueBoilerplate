@@ -6,8 +6,24 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('@/views/dashboard.vue')
-    }
+      component: () => import('@/pages/dashboard.vue')
+    },
+      {
+      path: '/saved',
+      name: 'Salvos',
+      component: () => import('@/pages/dashboard.vue')
+    },
+      {
+      path: '/completed',
+      name: 'Finalizados',
+      component: () => import('@/pages/dashboard.vue')
+    },
+      {
+      path: '/',
+      name: 'home',
+      component: () => import('@/pages/dashboard.vue')
+    },
+
   ],
 })
 
