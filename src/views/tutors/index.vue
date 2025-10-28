@@ -46,7 +46,7 @@
                     </div>
                   </div>
                   <div>
-                    <div class="font-bold">{{ item.nome }}</div>
+                    <div class="font-bold">{{ item.data.nome }}</div>
                     <div class="text-sm opacity-50">United States</div>
                   </div>
                 </div>
@@ -58,7 +58,11 @@
               </td>
               <td>Purple</td>
               <th>
-                <button class="btn btn-ghost btn-xs">details</button>
+                <router-link
+                  class="btn btn-info btn-xs"
+                  :to="{ name: 'tutors.edit', params: { id: item.key } }"
+                  >edit</router-link
+                >
               </th>
             </tr>
           </tbody>
@@ -90,7 +94,7 @@ const adicionar = () => {
 };
 
 const capturarTutores = async () => {
-  tutores.value = await db.collection("tutores").get();
+  tutores.value = await db.collection("tutores").get({ keys: true });
 };
 </script>
 
