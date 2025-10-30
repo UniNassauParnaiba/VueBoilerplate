@@ -1,6 +1,6 @@
 <template>
   <!-- Layout principal -->
-  <div class="flex">
+  <div class="flex h-screen bg-gray-100">
     <!-- Sidebar (Menu Lateral) -->
     <MenuLateral :isOpen="isSideBarOpen"/>
     <!-- Conteúdo Principal -->
@@ -8,7 +8,7 @@
       <!-- Navbar Superior -->
        <NavBar @toggle-menu="toggleSideBar" />
       <!-- Área de Conteúdo (Rotas) -->
-      <main class="flex-1 overflow-y-auto p-6">
+      <main class="flex-1 overflow-y-auto px-30">
         <router-view></router-view>
 
         <!-- Em React/Vue, você colocaria <Outlet /> ou <router-view> aqui -->

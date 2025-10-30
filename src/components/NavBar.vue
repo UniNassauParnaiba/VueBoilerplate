@@ -8,7 +8,7 @@
     </div>
   </div>  
   <div class="navbar-center">
-    <a class="btn btn-ghost text-xl">iServ</a>
+      <a class="btn btn-ghost text-xl" @click="handleGoToHome">iServ</a>
   </div>
   <div class="navbar-end">
     <button class="btn btn-ghost btn-circle">
@@ -25,6 +25,11 @@
 </template>
 
 <script setup>
+import router from '@/router'
+
+const handleGoToHome = () => {
+  router.push({ name: 'home'})// Lógica para navegar para a página inicial
+}
 const emit = defineEmits(['toggle-menu'])
 
 function toggleMenu() {
