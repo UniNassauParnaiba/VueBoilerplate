@@ -1,5 +1,5 @@
 <template>
-    <div class="navbar bg-base-100 mb-8 shadow-sm">
+    <div class="navbar bg-base-100 mb-20 shadow-sm">
   <div class="navbar-start">
     <div class="dropdown">
       <button type="button" class="btn btn-ghost btn-circle" @click='toggleMenu'>
