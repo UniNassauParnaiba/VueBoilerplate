@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-20 justify-center items-center text-center">
-    <h1 class="text-6xl">Encontre o profissional para o serviço que deseja!</h1>
-
+    <h1 class="text-6xl font-bold">ENCONTRE O PROFISSIONAL PARA O SERVIÇO QUE DESEJA!</h1>
+Encontre o profissional para o serviço que deseja!
 
       <div class="relative w-full max-w-4xl">
         <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">

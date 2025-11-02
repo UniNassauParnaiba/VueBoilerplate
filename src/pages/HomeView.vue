@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-20 justify-center items-center text-center">
-    <h1 class="text-6xl">Encontre o profissional para o serviço que deseja!</h1>
+    <h1 class="text-5xl font-bold">ENCONTRE O PROFISSIONAL PARA O SERVIÇO QUE DESEJA!</h1>
 
 
       <div class="relative w-full max-w-4xl">
@@ -15,13 +15,16 @@
           class="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 ">
       </div>
 
-        <CardsCategories/>
+      
+      <CardsCategories/>
 
       <RouterView/>
     </div>
 </template>
 
-<script setup></script>
+<script setup>
+
+</script>
 
 <style lang="scss" scoped></style>
 
