@@ -47,9 +47,10 @@
 import breadcrumbs from "@/components/breadcrumbs.vue";
 import Localbase from "localbase";
 import { onMounted, reactive } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
+const router = useRouter();
 let db = null;
 
 onMounted(() => {
@@ -85,20 +86,25 @@ function capturarTutores() {
 }
 
 function atualizarTutor() {
-  db.collection("tutores")
-    .doc(route.params.id)
-    .set({
-      nome: form.nomeCompleto,
-      endereco: {
-        bairro: form.endereco.bairro,
-        cep: form.endereco.cep,
-        numero: form.endereco.numero,
-        numero: form.endereco.numero,
-        logradouro: form.endereco.logradouro,
-        cidade: form.endereco.cidade,
-        estado: form.endereco.estado,
-      },
-    });
+  try {
+    db.collection("tutores")
+      .doc(route.params.id)
+      .set({
+        nome: form.nomeCompleto,
+        endereco: {
+          bairro: form.endereco.bairro,
+          cep: form.endereco.cep,
+          numero: form.endereco.numero,
+          numero: form.endereco.numero,
+          logradouro: form.endereco.logradouro,
+          cidade: form.endereco.cidade,
+          estado: form.endereco.estado,
+        },
+      });
+    router.push({ name: "tutors.index" });
+  } catch (error) {
+    console.log(error);
+  }
 }
 </script>
 
