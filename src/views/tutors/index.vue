@@ -63,6 +63,16 @@
                   :to="{ name: 'tutors.edit', params: { id: item.key } }"
                   >editar</router-link
                 >
+                <a href="#my_modal_1" class="btn btn-error btn-xs"> Deletar </a>
+                <div class="modal" role="dialog" id="my_modal_1">
+                  <div class="modal-box">
+                    <h3 class="text-lg font-bold">Hello!</h3>
+                    <p class="py-4">This modal works with anchor links</p>
+                    <div class="modal-action">
+                      <a href="#" class="btn">Yay!</a>
+                    </div>
+                  </div>
+                </div>
               </th>
             </tr>
           </tbody>
@@ -76,10 +86,11 @@
 <script setup>
 import breadcrumbs from "@/components/breadcrumbs.vue";
 import Localbase from "localbase";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, useTemplateRef } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
+const dialog = useTemplateRef("my_modal_1");
 
 let db = null;
 onMounted(() => {
@@ -96,6 +107,10 @@ const adicionar = () => {
 const capturarTutores = async () => {
   tutores.value = await db.collection("tutores").get({ keys: true });
 };
+
+function manipularModal() {
+  dialog.showModal();
+}
 </script>
 
 <style lang="scss" scoped></style>
