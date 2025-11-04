@@ -38,7 +38,7 @@
       <label class="label">Estado</label>
       <input type="text" class="input w-full" v-model="form.endereco.estado" placeholder="Estado" />
 
-      <button class="btn btn-neutral mt-4" @click="adicionarTutor">Adicionar</button>
+      <button class="btn btn-neutral mt-4" @click="atualizarTutor">Editar</button>
     </fieldset>
   </div>
 </template>
@@ -75,6 +75,29 @@ function capturarTutores() {
     .get()
     .then((document) => {
       form.nomeCompleto = document.nome;
+      form.endereco.bairro = document.endereco.bairro;
+      form.endereco.cep = document.endereco.cep;
+      form.endereco.numero = document.endereco.numero;
+      form.endereco.logradouro = document.endereco.logradouro;
+      form.endereco.cidade = document.endereco.cidade;
+      form.endereco.estado = document.endereco.estado;
+    });
+}
+
+function atualizarTutor() {
+  db.collection("tutores")
+    .doc(route.params.id)
+    .set({
+      nome: form.nomeCompleto,
+      endereco: {
+        bairro: form.endereco.bairro,
+        cep: form.endereco.cep,
+        numero: form.endereco.numero,
+        numero: form.endereco.numero,
+        logradouro: form.endereco.logradouro,
+        cidade: form.endereco.cidade,
+        estado: form.endereco.estado,
+      },
     });
 }
 </script>
