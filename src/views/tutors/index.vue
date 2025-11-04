@@ -61,7 +61,7 @@
                 <router-link
                   class="btn btn-info btn-xs"
                   :to="{ name: 'tutors.edit', params: { id: item.key } }"
-                  >edit</router-link
+                  >editar</router-link
                 >
               </th>
             </tr>
