@@ -29,7 +29,7 @@
           </thead>
           <tbody>
             <!-- row 1 -->
-            <tr v-for="tutor in tutores" :key="tutor.id">
+            <tr v-for="tutor in tutores" :key="tutor.data.id">
               <th>
                 <label>
                   <input type="checkbox" class="checkbox" />
@@ -46,24 +46,24 @@
                     </div>
                   </div>
                   <div>
-                    <div class="font-bold">{{ tutor.nome }}</div>
+                    <div class="font-bold">{{ tutor.data.nome }}</div>
                     <div class="text-sm opacity-50">
-                      {{ tutor.endereco.cidade ?? "Cliente sem cidade" }}
+                      {{ tutor.data.endereco.cidade ?? "Cliente sem cidade" }}
                     </div>
                   </div>
                 </div>
               </td>
               <td>
-                {{ tutor.endereco.logradouro }} {{ tutor.endereco.numero ?? "S/N" }}
-                {{ tutor.endereco.cep }} {{ tutor.endereco.complemento }}
+                {{ tutor.data.endereco.logradouro }} {{ tutor.data.endereco.numero ?? "S/N" }}
+                {{ tutor.data.endereco.cep }} {{ tutor.data.endereco.complemento }}
                 <br />
                 <span class="badge badge-ghost badge-sm"
-                  >{{ tutor.endereco.cidade }}/{{ tutor.endereco.estado }}</span
+                  >{{ tutor.data.endereco.cidade }}/{{ tutor.data.endereco.estado }}</span
                 >
               </td>
               <td>
                 <div
-                  v-for="telefone in tutor.telefones"
+                  v-for="telefone in tutor.data.telefones"
                   :key="telefone"
                   class="badge badge-xs badge-dash flex m-1"
                 >
@@ -71,7 +71,11 @@
                 </div>
               </td>
               <th>
-                <button class="btn btn-ghost btn-xs">details</button>
+                <router-link
+                  class="btn btn-info btn-xs"
+                  :to="{ name: 'tutors.edit', params: { id: tutor.key } }"
+                  >Editar</router-link
+                >
               </th>
             </tr>
           </tbody>
@@ -97,7 +101,7 @@ onMounted(() => {
 const tutores = ref([]);
 
 const capturarTutores = async () => {
-  tutores.value = await db.collection("tutores").get();
+  tutores.value = await db.collection("tutores").get({ keys: true });
 };
 
 const router = useRouter();
