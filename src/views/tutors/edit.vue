@@ -37,7 +37,7 @@
       <label class="label">Estado</label>
       <input type="text" class="input w-full" placeholder="Estado" v-model="form.estado" />
 
-      <button class="btn btn-neutral mt-4" @click="adicionarTutor">Editar</button>
+      <button class="btn btn-neutral mt-4" @click="atualizarTutor">Editar</button>
     </fieldset>
     <div class="toast" v-if="toastVisible">
       <div class="alert alert-info">
@@ -68,6 +68,21 @@ const form = reactive({
   estado: "",
 });
 let db = null;
+
+function atualizarTutor() {
+  db.collection("tutores")
+    .doc(route.params.id)
+    .update({
+      nome: form.nomeCompleto,
+      endereco: {
+        logradouro: form.logradouro,
+        numero: form.numero,
+        bairro: form.bairro,
+        cidade: form.cidade,
+        estado: form.estado,
+      },
+    });
+}
 
 function capturarMeuTutor(id) {
   db.collection("tutores")
