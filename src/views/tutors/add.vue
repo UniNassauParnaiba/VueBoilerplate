@@ -51,12 +51,9 @@
 
 <script setup>
 import { ref, reactive, onMounted } from "vue";
-import Localbase from "localbase";
+import DBService from "@/services/DBService";
 
-let db;
-onMounted(() => {
-  db = new Localbase("db");
-});
+onMounted(() => {});
 
 const toastVisible = ref(false);
 const nomeCompletoToast = ref("");
@@ -73,7 +70,7 @@ const form = reactive({
 
 const adicionarTutor = async () => {
   try {
-    await db.collection("tutores").add({
+    await DBService.adicionar("tutores", {
       nome: form.nomeCompleto,
       endereco: {
         logradouro: form.logradouro,

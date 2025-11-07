@@ -14,7 +14,7 @@ class DBService
   async adicionar(colecao, documento)
   {
     try {
-      this.db.collection(colecao).add(documento)
+      await this.db.collection(colecao).add(documento)
     } catch (error) {
       return error;
     }
