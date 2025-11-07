@@ -90,18 +90,18 @@
 import breadcrumbs from "@/components/breadcrumbs.vue";
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import Localbase from "localbase";
 
-let db;
+import DBService from "@/services/DBService";
+
 onMounted(() => {
-  db = new Localbase("db");
   capturarTutores();
 });
 
 const tutores = ref([]);
 
 const capturarTutores = async () => {
-  tutores.value = await db.collection("tutores").get({ keys: true });
+  let dados = await DBService.listar("tutores");
+  tutores.value = dados;
 };
 
 const router = useRouter();
