@@ -1,5 +1,5 @@
 <template>
-  <div>Hello, dashboard.</div>
+  <div>Wendel gay</div>
 </template>
 
 <script setup></script>
