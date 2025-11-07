@@ -11,6 +11,15 @@ class DBService
     return await this.db.collection(colecao).get({ keys: true})
   }
 
+  async adicionar(colecao, documento)
+  {
+    try {
+      this.db.collection(colecao).add(documento)
+    } catch (error) {
+      return error;
+    }
+  }
+
 }
 
 export default new DBService('db');
