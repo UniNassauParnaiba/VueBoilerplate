@@ -51,7 +51,7 @@
 
 <script setup>
 import breadcrumbs from "@/components/breadcrumbs.vue";
-import Localbase from "localbase";
+import DBService from "@/services/DBService";
 import { onMounted, reactive } from "vue";
 import { useRoute } from "vue-router";
 
@@ -67,12 +67,11 @@ const form = reactive({
   cidade: "",
   estado: "",
 });
-let db = null;
 
 function atualizarTutor() {
-  db.collection("tutores")
-    .doc(route.params.id)
-    .update({
+  DBService.atualizar(
+    "tutores",
+    {
       nome: form.nomeCompleto,
       endereco: {
         logradouro: form.logradouro,
@@ -81,27 +80,25 @@ function atualizarTutor() {
         cidade: form.cidade,
         estado: form.estado,
       },
-    });
+    },
+    route.params.id
+  );
 }
 
-function capturarMeuTutor(id) {
-  db.collection("tutores")
-    .doc(id)
-    .get()
-    .then((document) => {
-      form.nomeCompleto = document.nome;
-      form.logradouro = document.endereco.logradouro;
-      form.numero = document.endereco.numero;
-      form.bairro = document.endereco.bairro;
-      form.cep = document.endereco.cep;
-      form.complemento = document.endereco.complemento;
-      form.cidade = document.endereco.cidade;
-      form.estado = document.endereco.estado;
-    });
+async function capturarMeuTutor(id) {
+  const document = await DBService.recuperarDocumento("tutores", id);
+
+  form.nomeCompleto = document.nome;
+  form.logradouro = document.endereco.logradouro;
+  form.numero = document.endereco.numero;
+  form.bairro = document.endereco.bairro;
+  form.cep = document.endereco.cep;
+  form.complemento = document.endereco.complemento;
+  form.cidade = document.endereco.cidade;
+  form.estado = document.endereco.estado;
 }
 
 onMounted(() => {
-  db = new Localbase("db");
   capturarMeuTutor(route.params.id);
 });
 </script>
