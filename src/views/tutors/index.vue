@@ -37,6 +37,7 @@
               </th>
               <td>
                 <div class="flex items-center gap-3">
+                  <span class="status status-success"></span>
                   <div class="avatar">
                     <div class="mask mask-squircle h-12 w-12">
                       <img
@@ -66,10 +67,11 @@
                 <a href="#my_modal_1" class="btn btn-error btn-xs"> Deletar </a>
                 <div class="modal" role="dialog" id="my_modal_1">
                   <div class="modal-box">
-                    <h3 class="text-lg font-bold">Hello!</h3>
-                    <p class="py-4">This modal works with anchor links</p>
+                    <h3 class="text-lg font-bold">Você está preste a deletar um item.</h3>
+                    <p class="py-4">Tem certeza que deseja deletar esse item?</p>
                     <div class="modal-action">
-                      <a href="#" class="btn">Yay!</a>
+                      <a href="#" class="btn">Não</a>
+                      <a href="#" class="btn btn-info">Sim</a>
                     </div>
                   </div>
                 </div>
