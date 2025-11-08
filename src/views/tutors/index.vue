@@ -37,7 +37,10 @@
               </th>
               <td>
                 <div class="flex items-center gap-3">
-                  <span class="status status-success"></span>
+                  <span
+                    class="status"
+                    :class="{ 'status-success': item.data.status === 'online' }"
+                  ></span>
                   <div class="avatar">
                     <div class="mask mask-squircle h-12 w-12">
                       <img

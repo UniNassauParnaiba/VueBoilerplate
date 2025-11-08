@@ -67,6 +67,7 @@ const form = reactive({
 async function adicionarTutor() {
   await DBService.adicionar("tutores", {
     nome: form.nomeCompleto,
+    status: "offline",
     endereco: {
       cep: form.endereco.cep,
       bairro: form.endereco.bairro,
