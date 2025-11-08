@@ -45,6 +45,7 @@
 
 <script setup>
 import breadcrumbs from "@/components/breadcrumbs.vue";
+import DBService from "@/services/DBService";
 import Localbase from "localbase";
 import { onMounted, reactive } from "vue";
 import { useRoute, useRouter } from "vue-router";
@@ -71,36 +72,31 @@ const form = reactive({
 });
 
 function capturarTutores() {
-  db.collection("tutores")
-    .doc(route.params.id)
-    .get()
-    .then((document) => {
-      form.nomeCompleto = document.nome;
-      form.endereco.bairro = document.endereco.bairro;
-      form.endereco.cep = document.endereco.cep;
-      form.endereco.numero = document.endereco.numero;
-      form.endereco.logradouro = document.endereco.logradouro;
-      form.endereco.cidade = document.endereco.cidade;
-      form.endereco.estado = document.endereco.estado;
-    });
+  DBService.capturarDocumento("tutores", route.params.id).then((document) => {
+    form.nomeCompleto = document.nome;
+    form.endereco.bairro = document.endereco.bairro;
+    form.endereco.cep = document.endereco.cep;
+    form.endereco.numero = document.endereco.numero;
+    form.endereco.logradouro = document.endereco.logradouro;
+    form.endereco.cidade = document.endereco.cidade;
+    form.endereco.estado = document.endereco.estado;
+  });
 }
 
 function atualizarTutor() {
   try {
-    db.collection("tutores")
-      .doc(route.params.id)
-      .set({
-        nome: form.nomeCompleto,
-        endereco: {
-          bairro: form.endereco.bairro,
-          cep: form.endereco.cep,
-          numero: form.endereco.numero,
-          numero: form.endereco.numero,
-          logradouro: form.endereco.logradouro,
-          cidade: form.endereco.cidade,
-          estado: form.endereco.estado,
-        },
-      });
+    DBService.atualizar("tutores", route.params.id, {
+      nome: form.nomeCompleto,
+      endereco: {
+        bairro: form.endereco.bairro,
+        cep: form.endereco.cep,
+        numero: form.endereco.numero,
+        numero: form.endereco.numero,
+        logradouro: form.endereco.logradouro,
+        cidade: form.endereco.cidade,
+        estado: form.endereco.estado,
+      },
+    });
     router.push({ name: "tutors.index" });
   } catch (error) {
     console.log(error);

@@ -29,7 +29,7 @@
           </thead>
           <tbody>
             <!-- row 1 -->
-            <tr v-for="item in tutores" :key="item.id">
+            <tr v-for="item in tutores" :key="item.data.nome">
               <th>
                 <label>
                   <input type="checkbox" class="checkbox" />
@@ -46,7 +46,7 @@
                     </div>
                   </div>
                   <div>
-                    <div class="font-bold">{{ item.data.nome }}</div>
+                    <div class="font-bold">{{ item.data?.nome }}</div>
                     <div class="text-sm opacity-50">United States</div>
                   </div>
                 </div>
@@ -85,16 +85,14 @@
 
 <script setup>
 import breadcrumbs from "@/components/breadcrumbs.vue";
-import Localbase from "localbase";
+import DBService from "@/services/DBService";
 import { onMounted, ref, useTemplateRef } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 const dialog = useTemplateRef("my_modal_1");
 
-let db = null;
-onMounted(() => {
-  db = new Localbase("clinica-veterinaria");
+onMounted(async () => {
   capturarTutores();
 });
 
@@ -105,7 +103,7 @@ const adicionar = () => {
 };
 
 const capturarTutores = async () => {
-  tutores.value = await db.collection("tutores").get({ keys: true });
+  tutores.value = await DBService.listar("tutores");
 };
 
 function manipularModal() {

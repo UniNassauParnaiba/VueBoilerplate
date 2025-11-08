@@ -45,17 +45,12 @@
 
 <script setup>
 import { reactive, onMounted, ref } from "vue";
-import Localbase from "localbase";
 import { useRouter } from "vue-router";
+import DBService from "@/services/DBService";
 
 const router = useRouter();
-let db = null;
 let toastVisivel = ref(false);
 let toastMesagem = ref(null);
-
-onMounted(() => {
-  db = new Localbase("clinica-veterinaria");
-});
 
 const form = reactive({
   nomeCompleto: null,
@@ -69,35 +64,33 @@ const form = reactive({
   },
 });
 
-function adicionarTutor() {
-  db.collection("tutores")
-    .add({
-      nome: form.nomeCompleto,
-      endereco: {
-        cep: form.endereco.cep,
-        bairro: form.endereco.bairro,
-        numero: form.endereco.numero,
-        logradouro: form.endereco.logradouro,
-        cidade: form.endereco.cidade,
-        estado: form.endereco.estado,
-      },
-    })
-    .then(() => {
-      // Limpar o formulário após a adição
-      toastMesagem.value = `Tutor ${form.nomeCompleto} adicionado com sucesso!`;
-      form.nomeCompleto = null;
-      form.endereco.cep = null;
-      form.endereco.bairro = null;
-      form.endereco.numero = null;
-      form.endereco.logradouro = null;
-      form.endereco.cidade = null;
-      form.endereco.estado = null;
-      toastVisivel.value = true;
-      setTimeout(() => {
-        toastVisivel.value = false;
-        router.push("/tutors");
-      }, 3000);
-    });
+async function adicionarTutor() {
+  await DBService.adicionar("tutores", {
+    nome: form.nomeCompleto,
+    endereco: {
+      cep: form.endereco.cep,
+      bairro: form.endereco.bairro,
+      numero: form.endereco.numero,
+      logradouro: form.endereco.logradouro,
+      cidade: form.endereco.cidade,
+      estado: form.endereco.estado,
+    },
+  }).then(() => {
+    // Limpar o formulário após a adição
+    toastMesagem.value = `Tutor ${form.nomeCompleto} adicionado com sucesso!`;
+    form.nomeCompleto = null;
+    form.endereco.cep = null;
+    form.endereco.bairro = null;
+    form.endereco.numero = null;
+    form.endereco.logradouro = null;
+    form.endereco.cidade = null;
+    form.endereco.estado = null;
+    toastVisivel.value = true;
+    setTimeout(() => {
+      toastVisivel.value = false;
+      router.push("/tutors");
+    }, 3000);
+  });
 }
 </script>
 
