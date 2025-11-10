@@ -1,6 +1,6 @@
 <template>
   <div class="p-6">
-    <h1 class="text-3xl font-bold mb-6 text-center">🍔 Cardápio Digital</h1>
+    <h1 class="text-3xl font-bold mb-6 text-center"></h1>
 
     <!-- Grade de 3 colunas (responsiva) -->
     <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -81,7 +81,7 @@ const cardapio = [
   },
 ];
 </script>
-</template>
+
 
 
 <script setup></script>
