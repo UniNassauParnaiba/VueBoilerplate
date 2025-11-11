@@ -9,9 +9,10 @@ const router = createRouter({
       component: () => import('@/views/dashboard.vue'),
     },
     {
-      path: '/tutors',
+      path: '/cardapio',
       children: [
         { path: '', component: () => import('@/views/tutors/index.vue')},
+        { path: 'add', name: 'tutors.add', component: () => import('@/views/tutors/add.vue')},
         { path: ':id/edit', component: () => import('@/views/tutors/edit.vue')},
         { path: ':id/show', component: () => import('@/views/tutors/show.vue')},
       ]
