@@ -29,7 +29,7 @@
           </thead>
           <tbody>
             <!-- row 1 -->
-            <tr v-for="item in tutores" :key="item.data.nome">
+            <tr v-for="item in tutores" :key="item.data?.nome">
               <th>
                 <label>
                   <input type="checkbox" class="checkbox" />
@@ -39,7 +39,7 @@
                 <div class="flex items-center gap-3">
                   <span
                     class="status"
-                    :class="{ 'status-success': item.data.status === 'online' }"
+                    :class="{ 'status-success': item.data?.status === 'online' }"
                   ></span>
                   <div class="avatar">
                     <div class="mask mask-squircle h-12 w-12">
@@ -64,17 +64,19 @@
               <th>
                 <router-link
                   class="btn btn-info btn-xs"
-                  :to="{ name: 'tutors.edit', params: { id: item.key } }"
+                  :to="{ name: 'tutors.edit', params: { id: item?.key } }"
                   >editar</router-link
                 >
-                <a href="#my_modal_1" class="btn btn-error btn-xs"> Deletar </a>
-                <div class="modal" role="dialog" id="my_modal_1">
+                <a :href="`#my_modal_${item.key}`" class="btn btn-error btn-xs"> Deletar </a>
+                <div class="modal" role="dialog" :id="`my_modal_${item.key}`">
                   <div class="modal-box">
                     <h3 class="text-lg font-bold">Você está preste a deletar um item.</h3>
                     <p class="py-4">Tem certeza que deseja deletar esse item?</p>
                     <div class="modal-action">
                       <a href="#" class="btn">Não</a>
-                      <a href="#" class="btn btn-info">Sim</a>
+                      <a href="#" class="btn btn-info" @click.prevent="deletarTutor(item.key)"
+                        >Sim</a
+                      >
                     </div>
                   </div>
                 </div>
@@ -90,6 +92,7 @@
 
 <script setup>
 import breadcrumbs from "@/components/breadcrumbs.vue";
+import TutorsController from "@/controllers/TutorsController";
 import DBService from "@/services/DBService";
 import { onMounted, ref, useTemplateRef } from "vue";
 import { useRouter } from "vue-router";
@@ -108,8 +111,13 @@ const adicionar = () => {
 };
 
 const capturarTutores = async () => {
-  tutores.value = await DBService.listar("tutores");
+  tutores.value = await TutorsController.listar("tutores");
 };
+
+async function deletarTutor(id) {
+  await TutorsController.deletar(id);
+  await capturarTutores();
+}
 
 function manipularModal() {
   dialog.showModal();

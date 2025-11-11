@@ -39,6 +39,14 @@ class DBService
     }
   }
 
+  async deletar(colecao, chave) {
+    try {
+      this.db.collection(colecao).doc(chave).delete()
+    } catch (error) {
+      return error
+    }
+  }
+
 }
 
 export default new DBService('clinica-veterinaria');
