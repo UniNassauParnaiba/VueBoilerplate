@@ -29,7 +29,8 @@
           </thead>
           <tbody>
             <!-- row 1 -->
-            <tr v-for="item in tutores" :key="item.data?.nome">
+
+            <tr v-for="item in tutores" :key="item.nomeCompleto">
               <th>
                 <label>
                   <input type="checkbox" class="checkbox" />
@@ -39,7 +40,7 @@
                 <div class="flex items-center gap-3">
                   <span
                     class="status"
-                    :class="{ 'status-success': item.data?.status === 'online' }"
+                    :class="{ 'status-success': item.status === 'online' }"
                   ></span>
                   <div class="avatar">
                     <div class="mask mask-squircle h-12 w-12">
@@ -50,31 +51,31 @@
                     </div>
                   </div>
                   <div>
-                    <div class="font-bold">{{ item.data?.nome }}</div>
+                    <div class="font-bold">{{ item.nomeCompleto }}</div>
                     <div class="text-sm opacity-50">United States</div>
                   </div>
                 </div>
               </td>
               <td>
-                Zemlak, Daniel and Leannon
+                {{ item.endereco.logradouro }} - {{ item.endereco.bairro }}
                 <br />
-                <span class="badge badge-ghost badge-sm">Desktop Support Technician</span>
+                <span class="badge badge-ghost badge-sm">{{ item.endereco.cep }}</span>
               </td>
               <td>Purple</td>
               <th>
                 <router-link
                   class="btn btn-info btn-xs"
-                  :to="{ name: 'tutors.edit', params: { id: item?.key } }"
+                  :to="{ name: 'tutors.edit', params: { id: item.id } }"
                   >editar</router-link
                 >
                 <a :href="`#my_modal_${item.key}`" class="btn btn-error btn-xs"> Deletar </a>
-                <div class="modal" role="dialog" :id="`my_modal_${item.key}`">
+                <div class="modal" role="dialog" :id="`my_modal_${item.id}`">
                   <div class="modal-box">
                     <h3 class="text-lg font-bold">Você está preste a deletar um item.</h3>
                     <p class="py-4">Tem certeza que deseja deletar esse item?</p>
                     <div class="modal-action">
                       <a href="#" class="btn">Não</a>
-                      <a href="#" class="btn btn-info" @click.prevent="deletarTutor(item.key)"
+                      <a href="#" class="btn btn-info" @click.prevent="deletarTutor(item.id)"
                         >Sim</a
                       >
                     </div>
@@ -93,34 +94,19 @@
 <script setup>
 import breadcrumbs from "@/components/breadcrumbs.vue";
 import TutorsController from "@/controllers/TutorsController";
-import DBService from "@/services/DBService";
-import { onMounted, ref, useTemplateRef } from "vue";
+import { useTutor } from "@/composables/useTutor";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-const dialog = useTemplateRef("my_modal_1");
-
-onMounted(async () => {
-  capturarTutores();
-});
-
-const tutores = ref([]);
+const { capturarTutores, tutores } = useTutor();
 
 const adicionar = () => {
   router.push({ name: "tutors.add" });
 };
 
-const capturarTutores = async () => {
-  tutores.value = await TutorsController.listar("tutores");
-};
-
 async function deletarTutor(id) {
   await TutorsController.deletar(id);
   await capturarTutores();
-}
-
-function manipularModal() {
-  dialog.showModal();
 }
 </script>
 

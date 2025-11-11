@@ -1,9 +1,15 @@
+import Tutor from "@/models/Tutor";
 import DBService from "@/services/DBService"
 
 export default {
 
   async listar() {
-    return await DBService.listar("tutores");
+    const tutors = await DBService.listar("tutores");
+    return tutors.map(tutor => new Tutor(
+      tutor.key,
+      tutor.data.nome,
+      tutor.data.endereco
+    ));
   },
 
   async deletar(chave) {
