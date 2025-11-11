@@ -39,19 +39,39 @@
       </button>
     </div>
 
-    <!-- Estatísticas Rápidas -->
-    <div class="flex flex-wrap gap-8 justify-center mt-8 text-center">
-      <div class="space-y-1">
-        <p class="text-3xl font-bold text-gray-900">500+</p>
-        <p class="text-sm text-gray-600">Profissionais</p>
+    <!-- Estatísticas Destacadas - Estilo GetNinjas -->
+    <div class="w-full max-w-5xl mx-auto mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
+      <!-- Estatística 1 -->
+      <div class="text-center">
+        <div class="mb-4">
+          <h3 class="text-5xl font-bold text-gray-900 mb-2">500+</h3>
+          <div class="w-32 h-1 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-full mx-auto"></div>
+        </div>
+        <p class="text-gray-600 text-lg leading-relaxed">
+          Profissionais cadastrados na plataforma do iServ.
+        </p>
       </div>
-      <div class="space-y-1">
-        <p class="text-3xl font-bold text-gray-900">1.2k+</p>
-        <p class="text-sm text-gray-600">Serviços Realizados</p>
+
+      <!-- Estatística 2 -->
+      <div class="text-center">
+        <div class="mb-4">
+          <h3 class="text-5xl font-bold text-gray-900 mb-2">1.2k+</h3>
+          <div class="w-32 h-1 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-full mx-auto"></div>
+        </div>
+        <p class="text-gray-600 text-lg leading-relaxed">
+          Serviços solicitados por ano na plataforma do iServ.
+        </p>
       </div>
-      <div class="space-y-1">
-        <p class="text-3xl font-bold text-gray-900">4.8★</p>
-        <p class="text-sm text-gray-600">Avaliação Média</p>
+
+      <!-- Estatística 3 -->
+      <div class="text-center">
+        <div class="mb-4">
+          <h3 class="text-5xl font-bold text-gray-900 mb-2">4.8★</h3>
+          <div class="w-32 h-1 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-full mx-auto"></div>
+        </div>
+        <p class="text-gray-600 text-lg leading-relaxed">
+          Avaliação média dos serviços contratados pelo iServ.
+        </p>
       </div>
     </div>
   </div>
