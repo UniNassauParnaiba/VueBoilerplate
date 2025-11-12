@@ -16,11 +16,13 @@ declare module 'vue' {
     FeaturedProviders: typeof import('./src/components/FeaturedProviders.vue')['default']
     Footer: typeof import('./src/components/Footer.vue')['default']
     HeroSection: typeof import('./src/components/HeroSection.vue')['default']
+    LoginView: typeof import('./src/components/LoginView.vue')['default']
     MenuLateral: typeof import('./src/components/MenuLateral.vue')['default']
     NavBar: typeof import('./src/components/NavBar.vue')['default']
     NotificationsModal: typeof import('./src/components/NotificationsModal.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Sidebar: typeof import('./src/components/Sidebar.vue')['default']
+    VerificacaoPendenteView: typeof import('./src/components/VerificacaoPendenteView.vue')['default']
   }
 }
