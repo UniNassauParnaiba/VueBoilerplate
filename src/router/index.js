@@ -4,10 +4,10 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
+      path: '/inicio',
       component: () => import('@/views/dashboard.vue'),
     },
+    ///atualizar futuramente onde vai ter a parte de suporte tendo contatos da empresa cnpj email e endereço
     {
       path: '/cardapio',
       children: [
