@@ -37,12 +37,9 @@
               </th>
               <td>
                 <div class="flex items-center gap-3">
-                  <div class="avatar">
-                    <div class="mask mask-squircle h-12 w-12">
-                      <img
-                        src="https://img.daisyui.com/images/profile/demo/2@94.webp"
-                        alt="Avatar Tailwind CSS Component"
-                      />
+                  <div class="avatar avatar-placeholder">
+                    <div class="bg-neutral text-neutral-content w-12 rounded-full">
+                      <span class="text-3xl">{{ tutor.inicial }}</span>
                     </div>
                   </div>
                   <div>

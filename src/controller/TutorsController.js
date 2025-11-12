@@ -7,12 +7,7 @@ export default {
 
   async listarTutores() {
     const tutors = await DBService.listar(this.colecao);
-    return tutors.map(tutor => new Tutor(
-      tutor.key,
-      tutor.data.nome,
-      tutor.data.endereco,
-      tutor.data.telefones
-    ))
+    return tutors.map(tutor => new Tutor(tutor))
   },
 
   async deletarTutor(chave) {

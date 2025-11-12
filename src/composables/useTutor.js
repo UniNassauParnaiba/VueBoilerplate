@@ -7,6 +7,7 @@ export function useTutor() {
 
   const capturarTutores = async () => {
     tutores.value = await TutorsController.listarTutores();
+    console.log(tutores.value);
   }
 
   onMounted(() => {
