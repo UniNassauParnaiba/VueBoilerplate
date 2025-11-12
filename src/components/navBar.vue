@@ -97,7 +97,6 @@
           <span class="badge badge-xs badge-primary indicator-item"></span>
         </div>
       </button>
-
       <!-- Avatar com menu -->
       <div class="dropdown dropdown-end">
         <label tabindex="0" class="btn btn-ghost btn-circle avatar">
