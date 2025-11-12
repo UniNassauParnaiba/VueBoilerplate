@@ -1,6 +1,6 @@
 <template>
-  <div class="mb-4 p-8">
-    <img src="../assets/images/logo.png" alt="PetClinic" class="w-full h-auto object-cover" />
+  <div class="mb-0 p-0">
+    <img src="../assets/images/logo-image.png" alt="Cardápio Tech" class="w-full h-auto object-cover" />
   </div>
 </template>
 
