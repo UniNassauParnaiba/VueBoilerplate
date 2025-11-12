@@ -29,7 +29,7 @@
           </thead>
           <tbody>
             <!-- row 1 -->
-            <tr v-for="tutor in tutores" :key="tutor.data.id">
+            <tr v-for="tutor in tutores" :key="tutor.id">
               <th>
                 <label>
                   <input type="checkbox" class="checkbox" />
@@ -46,24 +46,24 @@
                     </div>
                   </div>
                   <div>
-                    <div class="font-bold">{{ tutor.data.nome }}</div>
+                    <div class="font-bold">{{ tutor.nome }}</div>
                     <div class="text-sm opacity-50">
-                      {{ tutor.data.endereco.cidade ?? "Cliente sem cidade" }}
+                      {{ tutor.endereco.cidade ?? "Cliente sem cidade" }}
                     </div>
                   </div>
                 </div>
               </td>
               <td>
-                {{ tutor.data.endereco.logradouro }} {{ tutor.data.endereco.numero ?? "S/N" }}
-                {{ tutor.data.endereco.cep }} {{ tutor.data.endereco.complemento }}
+                {{ tutor.endereco.logradouro }} {{ tutor.endereco.numero ?? "S/N" }}
+                {{ tutor.endereco.cep }} {{ tutor.endereco.complemento }}
                 <br />
                 <span class="badge badge-ghost badge-sm"
-                  >{{ tutor.data.endereco.cidade }}/{{ tutor.data.endereco.estado }}</span
+                  >{{ tutor.endereco.cidade }}/{{ tutor.endereco.estado }}</span
                 >
               </td>
               <td>
                 <div
-                  v-for="telefone in tutor.data.telefones"
+                  v-for="telefone in tutor.telefones"
                   :key="telefone"
                   class="badge badge-xs badge-dash flex m-1"
                 >
@@ -73,7 +73,7 @@
               <th>
                 <router-link
                   class="btn btn-info btn-xs"
-                  :to="{ name: 'tutors.edit', params: { id: tutor.key } }"
+                  :to="{ name: 'tutors.edit', params: { id: tutor.id } }"
                   >Editar</router-link
                 >
               </th>
@@ -91,7 +91,6 @@ import breadcrumbs from "@/components/breadcrumbs.vue";
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 
-import DBService from "@/services/DBService";
 import TutorsController from "@/controller/TutorsController";
 
 onMounted(() => {
