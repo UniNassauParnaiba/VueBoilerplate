@@ -92,6 +92,7 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 
 import DBService from "@/services/DBService";
+import TutorsController from "@/controller/TutorsController";
 
 onMounted(() => {
   capturarTutores();
@@ -100,7 +101,7 @@ onMounted(() => {
 const tutores = ref([]);
 
 const capturarTutores = async () => {
-  let dados = await DBService.listar("tutores");
+  let dados = await TutorsController.listarTutores();
   tutores.value = dados;
 };
 
