@@ -88,21 +88,10 @@
 
 <script setup>
 import breadcrumbs from "@/components/breadcrumbs.vue";
-import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
+import { useTutor } from "@/composables/useTutor";
 
-import TutorsController from "@/controller/TutorsController";
-
-onMounted(() => {
-  capturarTutores();
-});
-
-const tutores = ref([]);
-
-const capturarTutores = async () => {
-  let dados = await TutorsController.listarTutores();
-  tutores.value = dados;
-};
+const { tutores, capturarTutores } = useTutor();
 
 const router = useRouter();
 
