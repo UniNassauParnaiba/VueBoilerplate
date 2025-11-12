@@ -1,7 +1,7 @@
 <template>
   <div class="mb-2">
     <breadcrumbs>
-      <template v-slot:model> Tutores </template>
+      <template v-slot:model> Cardapio</template>
       <template v-slot:action> Lista de Tutores </template>
     </breadcrumbs>
   </div>
@@ -9,7 +9,7 @@
     <div class="card-body">
       <div class="overflow-x-auto">
         <div class="flex">
-          <div class="flex-1 mb-5 text-2xl">Tutores</div>
+          <div class="flex-1 mb-5 text-2xl">Comidas</div>
           <button class="btn btn-second" @click="adicionar">Adicionar</button>
         </div>
         <table class="table">

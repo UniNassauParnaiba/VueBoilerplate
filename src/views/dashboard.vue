@@ -1,9 +1,8 @@
 <template>
   <div class="p-6">
     <h1 class="text-3xl font-bold mb-6 text-center">🍔 Cardápio Digital</h1>
-    <h1 class="text-3xl font-bold mb-6 text-center"></h1>
 
-    <!-- Grade de 3 colunas (responsiva) -->
+    <!-- Grade de produtos -->
     <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       <div
         v-for="(item, index) in cardapio"
@@ -28,15 +27,44 @@
 
           <div class="card-actions justify-between items-center mt-2">
             <span class="font-bold text-lg">R$ {{ item.preco.toFixed(2) }}</span>
-            <button class="btn btn-primary btn-sm">Pedir</button>
+
+            <!-- Botão que adiciona ao carrinho -->
+            <button class="btn btn-primary btn-sm" @click="adicionarAoCarrinho(item)">
+              Pedir
+            </button>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Alerta visual quando adiciona algo -->
+    <div
+      v-if="mensagem"
+      class="toast toast-top toast-center transition-all duration-500"
+    >
+      <div class="alert alert-success">
+        <span>{{ mensagem }}</span>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue'
+import { carrinho } from '@/store/carrinho'
+
+const mensagem = ref('')
+
+const adicionarAoCarrinho = (item) => {
+  carrinho.adicionar(item)
+  mensagem.value = `${item.nome} foi adicionado ao carrinho!`
+
+  // Remove a mensagem depois de 2 segundos
+  setTimeout(() => {
+    mensagem.value = ''
+  }, 2000)
+}
+
 const cardapio = [
   {
     nome: "Hambúrguer Artesanal",
@@ -80,8 +108,15 @@ const cardapio = [
     imagem: "https://images.unsplash.com/photo-1551024601-bec78aea704b",
     novo: false,
   },
-];
+]
 </script>
+
+<style scoped>
+
+.toast {
+  z-index: 50;
+}
+</style>
 
 
 
