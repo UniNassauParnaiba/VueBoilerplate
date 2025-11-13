@@ -1,6 +1,6 @@
 <template>
   <div class="p-6">
-    <h1 class="text-3xl font-bold mb-6 text-center">🍔 Cardápio Digital</h1>
+    <h1 class="text-3xl font-bold mb-6 text-center"></h1>
 
     <!-- Grade de produtos -->
     <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -97,13 +97,37 @@ const cardapio = [
     imagem: "https://img.freepik.com/fotos-gratis/vida-morta-de-um-delicioso-hamburguer-americano_23-2149637307.jpg?semt=ais_incoming&w=740&q=80",
     novo: false,
   },
+
   {
     nome: "Picanha Burguer",
     descricao: "Picanha grelhada, queijo prato e molho barbecue.",
     preco: 31.9,
     imagem: "https://ricksfoodservices.com/wp-content/uploads/2021/08/hamburguer-de-picanha.jpg",
+    novo: true,},
+
+  // 🍟 BATATAS FRITAS
+  {
+    nome: "Batata Clássica",
+    descricao: "Porção de batata frita tradicional.",
+    preco: 14.9,
+    imagem: "https://gastronomiacarioca.zonasul.com.br/wp-content/uploads/2023/05/batata_frita_destaque_ilustrativo_zona_sul.jpg",
+    novo: false,
+  },
+  {
+    nome: "Batata com Cheddar e Bacon",
+    descricao: "Porção generosa com cheddar cremoso e bacon crocante.",
+    preco: 19.9,
+    imagem: "https://softpig.com.br/wp-content/uploads/2023/10/Batata-frita-com-cheddar-e-bacon-Receita-softpig.jpg",
     novo: true,
   },
+  {
+    nome: "Batata Rústica",
+    descricao: "Batata artesanal com casca e toque de alecrim.",
+    preco: 17.9,
+    imagem: "https://www.seara.com.br/wp-content/uploads/2025/09/batatarustica1200.jpg",
+    novo: false,
+  },
+
 
   // 🥤 BEBIDAS
   {
@@ -149,28 +173,6 @@ const cardapio = [
     novo: false,
   },
 
-  // 🍟 BATATAS FRITAS
-  {
-    nome: "Batata Clássica",
-    descricao: "Porção de batata frita tradicional.",
-    preco: 14.9,
-    imagem: "https://gastronomiacarioca.zonasul.com.br/wp-content/uploads/2023/05/batata_frita_destaque_ilustrativo_zona_sul.jpg",
-    novo: false,
-  },
-  {
-    nome: "Batata com Cheddar e Bacon",
-    descricao: "Porção generosa com cheddar cremoso e bacon crocante.",
-    preco: 19.9,
-    imagem: "https://softpig.com.br/wp-content/uploads/2023/10/Batata-frita-com-cheddar-e-bacon-Receita-softpig.jpg",
-    novo: true,
-  },
-  {
-    nome: "Batata Rústica",
-    descricao: "Batata artesanal com casca e toque de alecrim.",
-    preco: 17.9,
-    imagem: "https://alloydeliveryimages.s3.sa-east-1.amazonaws.com/item_images/5520/6464c5bc2bb85bx1ty.webp",
-    novo: false,
-  },
 ]
 </script>
 
