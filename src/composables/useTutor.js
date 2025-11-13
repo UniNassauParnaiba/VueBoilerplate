@@ -19,13 +19,19 @@ export function useTutor(){
     tutores.value = await TutorsController.listar();
   }
 
+  const deletarTutor = async (id) => {
+    await TutorsController.deletar(id);
+    await capturarTutores();
+  }
+
   onMounted(() => {
     capturarTutores();
   });
 
   return {
     tutores,
-    capturarTutores
+    capturarTutores,
+    deletarTutor
   }
 
 };

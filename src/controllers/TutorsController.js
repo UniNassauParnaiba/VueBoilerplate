@@ -5,11 +5,7 @@ export default {
 
   async listar() {
     const tutors = await DBService.listar("tutores");
-    return tutors.map(tutor => new Tutor(
-      tutor.key,
-      tutor.data.nome,
-      tutor.data.endereco
-    ));
+    return (tutors.length) ? tutors.map(tutor => new Tutor(tutor)) : [];
   },
 
   async deletar(chave) {

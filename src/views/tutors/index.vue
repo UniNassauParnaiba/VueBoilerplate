@@ -68,7 +68,7 @@
                   :to="{ name: 'tutors.edit', params: { id: item.id } }"
                   >editar</router-link
                 >
-                <a :href="`#my_modal_${item.key}`" class="btn btn-error btn-xs"> Deletar </a>
+                <a :href="`#my_modal_${item.id}`" class="btn btn-error btn-xs"> Deletar </a>
                 <div class="modal" role="dialog" :id="`my_modal_${item.id}`">
                   <div class="modal-box">
                     <h3 class="text-lg font-bold">Você está preste a deletar um item.</h3>
@@ -93,21 +93,20 @@
 
 <script setup>
 import breadcrumbs from "@/components/breadcrumbs.vue";
-import TutorsController from "@/controllers/TutorsController";
 import { useTutor } from "@/composables/useTutor";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-const { capturarTutores, tutores } = useTutor();
+const { capturarTutores, tutores, deletarTutor } = useTutor();
 
 const adicionar = () => {
   router.push({ name: "tutors.add" });
 };
 
-async function deletarTutor(id) {
-  await TutorsController.deletar(id);
-  await capturarTutores();
-}
+// async function deletarTutor(id) {
+//   await TutorsController.deletar(id);
+//   await capturarTutores();
+// }
 </script>
 
 <style lang="scss" scoped></style>
