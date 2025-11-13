@@ -76,13 +76,7 @@ const cardapio = [
     imagem: "https://veja.abril.com.br/wp-content/uploads/2024/02/suco-laranja.jpg?crop=1&resize=1212,909",
     novo: false,
   },
-  {
-    nome: "Milkshake Chocolate",
-    descricao: "Cremoso, com cobertura e chantilly.",
-    preco: 12.9,
-    imagem: "https://receitas.wap.ind.br/wp-content/uploads/2025/03/milkshake-de-chocolate.jpg",
-    novo: false,
-  },
+  
   {
     nome: "Cerveja",
     descricao: "Cerveja heineken long neck",
