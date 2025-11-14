@@ -1,464 +1,364 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
-    <!-- Header -->
-    <div class="bg-white shadow-sm border-b border-gray-200">
-      <div class="max-w-7xl mx-auto px-4 py-6">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-4">
-            <router-link
-              to="/cliente/dashboard"
-              class="p-2 hover:bg-gray-100 rounded-lg transition-all"
-            >
-              <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-              </svg>
-            </router-link>
-            <div>
-              <h1 class="text-2xl font-bold text-gray-900">Meu Perfil</h1>
-              <p class="text-gray-600 mt-1">Gerencie suas informações pessoais</p>
+  <div class="min-h-screen bg-white py-8 px-4 transition-colors duration-200">
+    <div class="max-w-4xl mx-auto">
+
+      <!-- Header -->
+      <div class="mb-8">
+        <h1 class="text-4xl font-bold text-gray-900 mb-2">Meu Perfil</h1>
+        <p class="text-gray-600">Gerencie suas informações pessoais e configurações da conta</p>
+      </div>
+
+      <!-- Card de Perfil -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 mb-6">
+
+        <!-- Header do Card (mantido estilo azul da home) -->
+        <div class="bg-gradient-to-r from-blue-600 to-blue-700 p-6">
+          <div class="flex items-center gap-6">
+
+            <!-- Avatar -->
+            <div class="w-24 h-24 rounded-full bg-white flex items-center justify-center text-gray-900 text-3xl font-bold">
+              {{ userInitials }}
+            </div>
+
+            <!-- Informações Básicas -->
+            <div class="flex-1">
+              <h2 class="text-2xl font-bold text-white mb-1">{{ userName }}</h2>
+              <p class="text-gray-200 mb-2">{{ user?.email }}</p>
+
+              <div class="flex gap-2">
+                <span class="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-white text-sm font-semibold">
+                  {{ userRole === 'cliente' ? 'Cliente' : 'Prestador de Serviço' }}
+                </span>
+
+                <span v-if="userRole === 'prestador' && user?.verificado"
+                      class="px-3 py-1 bg-green-500/80 backdrop-blur-sm rounded-full text-white text-sm font-semibold flex items-center gap-1">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clip-rule="evenodd" />
+                  </svg>
+                  Verificado
+                </span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Conteúdo -->
-    <div class="max-w-4xl mx-auto px-4 py-8">
-      <!-- Mensagem de Sucesso -->
-      <div v-if="showSuccess" class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6 flex items-center gap-3">
-        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-        </svg>
-        <span>Perfil atualizado com sucesso!</span>
-      </div>
+        <!-- Conteúdo do Card -->
+        <div class="p-6">
 
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Sidebar -->
-        <div class="lg:col-span-1">
-          <div class="bg-white rounded-xl shadow-md p-6 sticky top-6">
-            <!-- Avatar -->
-            <div class="text-center mb-6">
-              <div class="w-24 h-24 bg-gray-900 text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-3">
-                {{ form.nome.charAt(0) }}
-              </div>
-              <button class="text-sm text-gray-600 hover:text-gray-900 font-medium">
-                Alterar Foto
-              </button>
-            </div>
-
-            <!-- Menu de Seções -->
-            <nav class="space-y-1">
+          <!-- Tabs -->
+          <div class="border-b border-gray-200 mb-6">
+            <nav class="flex gap-6">
               <button
-                v-for="section in sections"
-                :key="section.id"
-                @click="activeSection = section.id"
+                @click="activeTab = 'informacoes'"
                 :class="[
-                  'w-full text-left px-4 py-3 rounded-lg font-medium transition-all flex items-center gap-3',
-                  activeSection === section.id
-                    ? 'bg-gray-900 text-white'
-                    : 'text-gray-700 hover:bg-gray-100'
-                ]"
-              >
-                <component :is="section.icon" class="w-5 h-5" />
-                {{ section.name }}
+                  'pb-4 border-b-2 font-semibold transition-colors',
+                  activeTab === 'informacoes'
+                    ? 'border-gray-900 text-gray-900'
+                    : 'border-transparent text-gray-500 hover:text-gray-700'
+                ]">
+                Informações Pessoais
+              </button>
+
+              <button
+                @click="activeTab = 'seguranca'"
+                :class="[
+                  'pb-4 border-b-2 font-semibold transition-colors',
+                  activeTab === 'seguranca'
+                    ? 'border-gray-900 text-gray-900'
+                    : 'border-transparent text-gray-500 hover:text-gray-700'
+                ]">
+                Segurança
+              </button>
+
+              <button
+                @click="activeTab = 'configuracoes'"
+                :class="[
+                  'pb-4 border-b-2 font-semibold transition-colors',
+                  activeTab === 'configuracoes'
+                    ? 'border-gray-900 text-gray-900'
+                    : 'border-transparent text-gray-500 hover:text-gray-700'
+                ]">
+                Configurações
               </button>
             </nav>
           </div>
-        </div>
 
-        <!-- Conteúdo Principal -->
-        <div class="lg:col-span-2">
-          <form @submit.prevent="handleSubmit" class="space-y-6">
-            <!-- Dados Pessoais -->
-            <div v-show="activeSection === 'personal'" class="bg-white rounded-xl shadow-md p-6">
-              <h2 class="text-xl font-bold text-gray-900 mb-6">Dados Pessoais</h2>
+          <!-- Tab: Informações Pessoais -->
+          <div v-if="activeTab === 'informacoes'" class="space-y-6">
 
-              <div class="space-y-4">
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-2">Nome Completo</label>
-                  <input
-                    v-model="form.nome"
-                    type="text"
-                    required
-                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent"
-                  />
-                </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                  {{ userRole === 'prestador' && user?.tipoPrestador === 'PJ' ? 'Razão Social' : 'Nome Completo' }}
+                </label>
+                <input type="text" :value="userName" disabled
+                       class="w-full px-4 py-2 bg-gray-100 border border-gray-300 text-gray-900 rounded-lg" />
+              </div>
 
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-2">CPF</label>
-                  <input
-                    v-model="form.cpf"
-                    type="text"
-                    disabled
-                    class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed"
-                  />
-                  <p class="text-xs text-gray-500 mt-1">O CPF não pode ser alterado</p>
-                </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                <input type="email" :value="user?.email" disabled
+                       class="w-full px-4 py-2 bg-gray-100 border border-gray-300 text-gray-900 rounded-lg" />
+              </div>
 
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-2">Data de Nascimento</label>
-                  <input
-                    v-model="form.dataNascimento"
-                    type="date"
-                    required
-                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent"
-                  />
-                </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                  {{ user?.cnpj ? 'CNPJ' : 'CPF' }}
+                </label>
+                <input type="text" :value="user?.cpf || user?.cnpj" disabled
+                       class="w-full px-4 py-2 bg-gray-100 border border-gray-300 text-gray-900 rounded-lg" />
+              </div>
 
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-2">Telefone</label>
-                  <input
-                    v-model="form.telefone"
-                    type="tel"
-                    required
-                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent"
-                  />
-                </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Telefone</label>
+                <input type="tel" :value="user?.telefone" disabled
+                       class="w-full px-4 py-2 bg-gray-100 border border-gray-300 text-gray-900 rounded-lg" />
+              </div>
+
+              <div v-if="userRole === 'prestador'" class="md:col-span-2">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Categoria</label>
+                <input type="text" :value="user?.categoriaPrincipal || user?.categoria" disabled
+                       class="w-full px-4 py-2 bg-gray-100 border border-gray-300 text-gray-900 rounded-lg" />
               </div>
             </div>
 
-            <!-- Endereço -->
-            <div v-show="activeSection === 'address'" class="bg-white rounded-xl shadow-md p-6">
-              <h2 class="text-xl font-bold text-gray-900 mb-6">Endereço</h2>
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <p class="text-sm text-blue-800">
+                <strong>Nota:</strong> Para alterar suas informações pessoais, entre em contato com o suporte.
+              </p>
+            </div>
+          </div>
+
+          <!-- Tab: Segurança -->
+          <div v-if="activeTab === 'seguranca'" class="space-y-6">
+
+            <div>
+              <h3 class="text-lg font-semibold text-gray-900 mb-4">Alterar Senha</h3>
 
               <div class="space-y-4">
+
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-2">CEP</label>
-                  <input
-                    v-model="form.endereco.cep"
-                    type="text"
-                    required
-                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent"
-                  />
-                </div>
-
-                <div class="grid grid-cols-2 gap-4">
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Cidade</label>
-                    <input
-                      v-model="form.endereco.cidade"
-                      type="text"
-                      required
-                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent"
-                    />
-                  </div>
-
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Estado</label>
-                    <select
-                      v-model="form.endereco.estado"
-                      required
-                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent"
-                    >
-                      <option value="">UF</option>
-                      <option value="SP">SP</option>
-                      <option value="RJ">RJ</option>
-                      <option value="MG">MG</option>
-                    </select>
-                  </div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Senha Atual</label>
+                  <input type="password"
+                         class="w-full px-4 py-2 border border-gray-300 bg-white text-gray-900 rounded-lg focus:ring-2 focus:ring-blue-500"
+                         placeholder="Digite sua senha atual" />
                 </div>
 
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-2">Bairro</label>
-                  <input
-                    v-model="form.endereco.bairro"
-                    type="text"
-                    required
-                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent"
-                  />
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Nova Senha</label>
+                  <input type="password"
+                         class="w-full px-4 py-2 border border-gray-300 bg-white text-gray-900 rounded-lg focus:ring-2 focus:ring-blue-500"
+                         placeholder="Digite sua nova senha" />
                 </div>
 
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-2">Rua</label>
-                  <input
-                    v-model="form.endereco.rua"
-                    type="text"
-                    required
-                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent"
-                  />
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Confirmar Nova Senha</label>
+                  <input type="password"
+                         class="w-full px-4 py-2 border border-gray-300 bg-white text-gray-900 rounded-lg focus:ring-2 focus:ring-blue-500"
+                         placeholder="Confirme sua nova senha" />
                 </div>
 
-                <div class="grid grid-cols-2 gap-4">
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Número</label>
-                    <input
-                      v-model="form.endereco.numero"
-                      type="text"
-                      required
-                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent"
-                    />
-                  </div>
-
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Complemento</label>
-                    <input
-                      v-model="form.endereco.complemento"
-                      type="text"
-                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent"
-                    />
-                  </div>
-                </div>
+                <button
+                  class="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors">
+                  Alterar Senha
+                </button>
               </div>
             </div>
 
-            <!-- Segurança -->
-            <div v-show="activeSection === 'security'" class="bg-white rounded-xl shadow-md p-6">
-              <h2 class="text-xl font-bold text-gray-900 mb-6">Segurança</h2>
-
-              <div class="space-y-4">
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                  <input
-                    v-model="form.email"
-                    type="email"
-                    required
-                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent"
-                  />
-                </div>
-
-                <div class="border-t border-gray-200 pt-6 mt-6">
-                  <h3 class="font-semibold text-gray-900 mb-4">Alterar Senha</h3>
-
-                  <div class="space-y-4">
-                    <div>
-                      <label class="block text-sm font-medium text-gray-700 mb-2">Senha Atual</label>
-                      <input
-                        v-model="passwordForm.current"
-                        type="password"
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent"
-                      />
-                    </div>
-
-                    <div>
-                      <label class="block text-sm font-medium text-gray-700 mb-2">Nova Senha</label>
-                      <input
-                        v-model="passwordForm.new"
-                        type="password"
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent"
-                      />
-                    </div>
-
-                    <div>
-                      <label class="block text-sm font-medium text-gray-700 mb-2">Confirmar Nova Senha</label>
-                      <input
-                        v-model="passwordForm.confirm"
-                        type="password"
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent"
-                      />
-                    </div>
-                  </div>
-                </div>
+            <div class="border-t border-gray-200 pt-6">
+              <h3 class="text-lg font-semibold text-gray-900 mb-2">Informações da Conta</h3>
+              <div class="space-y-2 text-sm text-gray-600">
+                <p><strong>Membro desde:</strong> {{ formatDate(user?.dataCadastro) }}</p>
+                <p><strong>Último acesso:</strong> Hoje</p>
+                <p><strong>ID da Conta:</strong> {{ user?.id }}</p>
               </div>
             </div>
+          </div>
 
-            <!-- Notificações -->
-            <div v-show="activeSection === 'notifications'" class="bg-white rounded-xl shadow-md p-6">
-              <h2 class="text-xl font-bold text-gray-900 mb-6">Preferências de Notificação</h2>
+          <!-- Tab: Configurações -->
+          <div v-if="activeTab === 'configuracoes'" class="space-y-6">
+
+            <div>
+              <h3 class="text-lg font-semibold text-gray-900 mb-4">Preferências</h3>
 
               <div class="space-y-4">
-                <label class="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+
+                <label
+                  class="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer">
                   <div>
                     <p class="font-medium text-gray-900">Notificações por Email</p>
-                    <p class="text-sm text-gray-600">Receba atualizações sobre seus serviços</p>
+                    <p class="text-sm text-gray-600">Receber atualizações e novidades</p>
                   </div>
-                  <input
-                    v-model="form.notificacoes.email"
-                    type="checkbox"
-                    class="w-5 h-5 text-gray-900 rounded focus:ring-gray-900"
-                  />
+                  <input type="checkbox" class="w-5 h-5 text-black rounded focus:ring-2 focus:ring-black" checked />
                 </label>
 
-                <label class="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                <label
+                  class="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer">
                   <div>
-                    <p class="font-medium text-gray-900">Notificações por SMS</p>
-                    <p class="text-sm text-gray-600">Alertas importantes no seu celular</p>
+                    <p class="font-medium text-gray-900">Modo Escuro Automático</p>
+                    <p class="text-sm text-gray-600">Seguir configuração do sistema</p>
                   </div>
-                  <input
-                    v-model="form.notificacoes.sms"
-                    type="checkbox"
-                    class="w-5 h-5 text-gray-900 rounded focus:ring-gray-900"
-                  />
+                  <input type="checkbox" class="w-5 h-5 text-black rounded focus:ring-2 focus:ring-black" />
                 </label>
 
-                <label class="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
+                <label v-if="userRole === 'prestador'"
+                       class="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer">
                   <div>
-                    <p class="font-medium text-gray-900">Novidades e Promoções</p>
-                    <p class="text-sm text-gray-600">Receba ofertas exclusivas</p>
+                    <p class="font-medium text-gray-900">Aceitar Novas Solicitações</p>
+                    <p class="text-sm text-gray-600">Receber pedidos de serviço</p>
                   </div>
-                  <input
-                    v-model="form.notificacoes.promocoes"
-                    type="checkbox"
-                    class="w-5 h-5 text-gray-900 rounded focus:ring-gray-900"
-                  />
+                  <input type="checkbox" class="w-5 h-5 text-black rounded focus:ring-2 focus:ring-black" checked />
                 </label>
+
               </div>
             </div>
 
-            <!-- Mensagem de erro -->
-            <div v-if="error" class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
-              {{ error }}
+            <!-- Zona de Perigo -->
+            <div class="border-t border-gray-200 pt-6">
+              <h3 class="text-lg font-semibold text-red-600 mb-4">Zona de Perigo</h3>
+
+              <div class="bg-red-50 border-2 border-red-200 rounded-lg p-6">
+
+                <div class="flex items-start gap-4">
+                  <div class="flex-shrink-0">
+                    <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                  </div>
+
+                  <div class="flex-1">
+                    <h4 class="font-semibold text-red-900 mb-2">Excluir Conta Permanentemente</h4>
+                    <p class="text-sm text-red-700 mb-4">
+                      Ao excluir sua conta, todos os seus dados serão removidos permanentemente.
+                      Esta ação não pode ser desfeita.
+                    </p>
+
+                    <button @click="showDeleteModal = true"
+                            class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-semibold">
+                      Excluir Minha Conta
+                    </button>
+                  </div>
+                </div>
+
+              </div>
             </div>
 
-            <!-- Botões de Ação -->
-            <div class="flex gap-4 pt-4">
-              <button
-                type="submit"
-                :disabled="loading"
-                class="flex-1 bg-gray-900 text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition-all disabled:bg-gray-400"
-              >
-                <span v-if="!loading">Salvar Alterações</span>
-                <span v-else>Salvando...</span>
-              </button>
-
-              <router-link
-                to="/cliente/dashboard"
-                class="flex-1 border-2 border-gray-300 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-all text-center"
-              >
-                Cancelar
-              </router-link>
-            </div>
-          </form>
+          </div>
         </div>
       </div>
+
+      <!-- Botão Voltar -->
+      <div class="flex justify-between">
+        <button @click="$router.back()"
+                class="px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-all">
+          Voltar
+        </button>
+      </div>
+
     </div>
+
+    <!-- Modal de Exclusão -->
+    <div v-if="showDeleteModal"
+         class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" @click.self="showDeleteModal = false">
+
+      <div class="bg-white rounded-lg p-8 max-w-md w-full border border-gray-200">
+
+        <div class="text-center">
+          <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+          </div>
+
+          <h3 class="text-2xl font-bold text-gray-900 mb-2">Confirmar Exclusão</h3>
+          <p class="text-gray-600 mb-6">
+            Tem certeza que deseja excluir sua conta? Esta ação é irreversível e todos os seus dados serão perdidos.
+          </p>
+
+          <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6 text-left">
+            <p class="text-sm text-yellow-800 font-semibold mb-2">O que será perdido:</p>
+            <ul class="text-sm text-yellow-700 space-y-1 list-disc list-inside">
+              <li>Todas as suas informações pessoais</li>
+              <li v-if="userRole === 'prestador'">Seu histórico de serviços e avaliações</li>
+              <li v-if="userRole === 'cliente'">Suas solicitações e histórico</li>
+              <li>Acesso à plataforma</li>
+            </ul>
+          </div>
+
+          <div class="flex gap-4">
+            <button @click="showDeleteModal = false"
+                    class="flex-1 px-4 py-3 border-2 border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-all">
+              Cancelar
+            </button>
+
+            <button @click="confirmDelete"
+                    class="flex-1 px-4 py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition-all">
+              Sim, Excluir
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { getCurrentUser, getCurrentUserRole, deleteCurrentUserAccount } from '@/services/userService'
 
 const router = useRouter()
 
-const activeSection = ref('personal')
-const loading = ref(false)
-const error = ref('')
-const showSuccess = ref(false)
-
-const sections = [
-  {
-    id: 'personal',
-    name: 'Dados Pessoais',
-    icon: 'svg'
-  },
-  {
-    id: 'address',
-    name: 'Endereço',
-    icon: 'svg'
-  },
-  {
-    id: 'security',
-    name: 'Segurança',
-    icon: 'svg'
-  },
-  {
-    id: 'notifications',
-    name: 'Notificações',
-    icon: 'svg'
-  }
-]
-
-const form = ref({
-  nome: '',
-  cpf: '',
-  dataNascimento: '',
-  telefone: '',
-  email: '',
-  endereco: {
-    cep: '',
-    cidade: '',
-    estado: '',
-    bairro: '',
-    rua: '',
-    numero: '',
-    complemento: ''
-  },
-  notificacoes: {
-    email: true,
-    sms: false,
-    promocoes: true
-  }
-})
-
-const passwordForm = ref({
-  current: '',
-  new: '',
-  confirm: ''
-})
+const user = ref(null)
+const userRole = ref('')
+const activeTab = ref('informacoes')
+const showDeleteModal = ref(false)
 
 onMounted(() => {
-  const userData = localStorage.getItem('user')
-  if (userData) {
-    const user = JSON.parse(userData)
-    form.value = {
-      nome: user.nome || '',
-      cpf: user.cpf || '',
-      dataNascimento: user.dataNascimento || '',
-      telefone: user.telefone || '',
-      email: user.email || '',
-      endereco: user.endereco || {
-        cep: '',
-        cidade: '',
-        estado: '',
-        bairro: '',
-        rua: '',
-        numero: '',
-        complemento: ''
-      },
-      notificacoes: user.notificacoes || {
-        email: true,
-        sms: false,
-        promocoes: true
-      }
-    }
+  user.value = getCurrentUser()
+  userRole.value = getCurrentUserRole()
+
+  if (!user.value) {
+    router.push('/login')
   }
 })
 
-const handleSubmit = async () => {
-  loading.value = true
-  error.value = ''
-  showSuccess.value = false
+const userName = computed(() => {
+  return user.value?.nome || user.value?.razaoSocial || 'Usuário'
+})
 
+const userInitials = computed(() => {
+  const name = userName.value
+  const parts = name.split(' ')
+  if (parts.length > 1) {
+    return parts[0][0] + parts[parts.length - 1][0]
+  }
+  return parts[0][0]
+})
+
+function formatDate(dateString) {
+  if (!dateString) return '-'
+  const date = new Date(dateString)
+  return date.toLocaleDateString('pt-BR', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric'
+  })
+}
+
+function confirmDelete() {
   try {
-    // Validar senha se estiver alterando
-    if (passwordForm.value.new && passwordForm.value.new !== passwordForm.value.confirm) {
-      error.value = 'As senhas não coincidem'
-      loading.value = false
-      return
-    }
-
-    // Simulação de atualização
-    await new Promise(resolve => setTimeout(resolve, 1000))
-
-    // Atualizar localStorage
-    const userData = JSON.parse(localStorage.getItem('user') || '{}')
-    const updatedUser = {
-      ...userData,
-      ...form.value
-    }
-    localStorage.setItem('user', JSON.stringify(updatedUser))
-
-    showSuccess.value = true
-
-    // Limpar campos de senha
-    passwordForm.value = {
-      current: '',
-      new: '',
-      confirm: ''
-    }
-
-    // Scroll to top
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-
-    // Esconder mensagem de sucesso após 3 segundos
-    setTimeout(() => {
-      showSuccess.value = false
-    }, 3000)
-
-  } catch (err) {
-    error.value = 'Erro ao atualizar perfil. Tente novamente.'
-  } finally {
-    loading.value = false
+    deleteCurrentUserAccount()
+    alert('Sua conta foi excluída com sucesso.')
+    router.push('/')
+  } catch (error) {
+    alert('Erro ao excluir conta: ' + error.message)
   }
 }
 </script>
