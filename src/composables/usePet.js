@@ -6,9 +6,9 @@ export function usePet() {
   // const pets = ref([]);
   const pet = ref({});
 
-  const adicionarPet = async(pet) => {
+  const adicionarPet = async() => {
     // pets.value = [{}, {}];
-    await PetsController.adicionarPet(pet)
+    await PetsController.adicionarPet(pet.value)
   }
 
 

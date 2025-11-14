@@ -1,3 +1,4 @@
+import Pet from "@/model/Pet";
 import DBService from "@/services/DBService"
 
 export default {
@@ -5,10 +6,9 @@ export default {
   colecao: 'pets',
 
   async adicionarPet(pet) {
-    console.log(this.colecao, pet)
+    const PetModel = new Pet(pet);
     try {
-      const pets = await DBService.adicionar(this.colecao, pet);
-      return pets;
+      await DBService.adicionar(this.colecao, PetModel);
     } catch (e) {
       return new Error('Algo deu errado', e);
     }
