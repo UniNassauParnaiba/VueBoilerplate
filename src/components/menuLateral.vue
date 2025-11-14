@@ -2,7 +2,7 @@
   <div class="mx-3">
     <ul class="menu bg-base-200 rounded-box w-56">
       <li><router-link :to="{ name: 'tutors.index' }">Tutores</router-link></li>
-      <li><a>Pets</a></li>
+      <li><router-link :to="{ name: 'pets.index' }">Animais</router-link></li>
     </ul>
   </div>
 </template>
