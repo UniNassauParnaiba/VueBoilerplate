@@ -56,6 +56,9 @@
 
 <script setup>
 import breadcrumbs from "@/components/breadcrumbs.vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const adicionar = () => {
   router.push({ name: "pets.add" });
