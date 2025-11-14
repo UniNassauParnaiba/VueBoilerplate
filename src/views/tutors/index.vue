@@ -29,7 +29,6 @@
           </thead>
           <tbody>
             <!-- row 1 -->
-
             <tr v-for="item in tutores" :key="item.nomeCompleto">
               <th>
                 <label>
@@ -97,7 +96,8 @@ import { useTutor } from "@/composables/useTutor";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-const { capturarTutores, tutores, deletarTutor } = useTutor();
+const { tutores, deletarTutor } = useTutor();
+console.log(tutores.value);
 
 const adicionar = () => {
   router.push({ name: "tutors.add" });

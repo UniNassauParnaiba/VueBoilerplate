@@ -25,7 +25,7 @@ class DBService
 
   async capturarDocumento(colecao, chave) {
     try {
-      return await this.db.collection(colecao).doc(chave).get()
+      return await this.db.collection(colecao).doc(chave).get();
     } catch (error) {
       return error
     }

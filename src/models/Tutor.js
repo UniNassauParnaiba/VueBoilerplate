@@ -1,10 +1,10 @@
 
 export default class Tutor {
-  constructor(tutor) {
-    this.id = tutor?.key || null;
-    this.nomeCompleto = tutor.data?.nome.toUpperCase().trim();
-    this.endereco = tutor.data?.endereco;
-    this.telefones = tutor.data?.telefones || [];
-    this.status = tutor.data?.status || "offline";
+  constructor(id, nomeCompleto, endereco = {}, telefones = [], status = "offline") {
+    this.id = id || null;
+    this.nomeCompleto = nomeCompleto?.toUpperCase().trim();
+    this.endereco = endereco?.endereco || {};
+    this.telefones = telefones.data?.telefones || [];
+    this.status = status.data?.status || "offline";
   }
 }
