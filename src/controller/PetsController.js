@@ -14,4 +14,9 @@ export default {
     }
   },
 
+  async listarPets() {
+    const pets = await DBService.listar(this.colecao);
+    return pets.map(pet => new Pet(pet.data.nome, pet.data.raca, pet.data.data_nascimento, pet.data.tutor_id));
+  },
+
 }

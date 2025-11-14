@@ -37,13 +37,12 @@
                 </label>
               </th>
 
-              <td>- - -</td>
+              <td>{{ pet.nome }}</td>
+              <td>{{ pet.raca }}</td>
+              <td>{{ pet.data_nascimento }}</td>
+              <td>{{ pet.tutor_id }}</td>
               <th>
-                <router-link
-                  class="btn btn-info btn-xs"
-                  :to="{ name: 'pets.edit', params: { id: pet.id } }"
-                  >Editar</router-link
-                >
+                <router-link class="btn btn-info btn-xs">Editar</router-link>
               </th>
             </tr>
           </tbody>
@@ -56,9 +55,13 @@
 
 <script setup>
 import breadcrumbs from "@/components/breadcrumbs.vue";
+import { usePet } from "@/composables/usePet";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
+
+const { pets, listarPets } = usePet();
+console.log(pets);
 
 const adicionar = () => {
   router.push({ name: "pets.add" });
