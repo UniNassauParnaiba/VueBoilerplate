@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
+  routes:[
     {
       path: '/',
       name: 'inicio',
@@ -31,10 +31,11 @@ const router = createRouter({
   path: '/carrinho',
   name: 'Carrinho',
   component: () => import('@/views/CarrinhoView.vue'),
-}
+},
+{
+  path: '/notificações'
 
-
-  ],
-})
+},
+]})
 
 export default router

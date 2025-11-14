@@ -63,6 +63,21 @@ const adicionarAoCarrinho = (item) => {
 const cardapio = [
   // 🍔 HAMBÚRGUERES
   {
+    nome: "Cheddar Melt",
+    descricao: "Carne 180g, cheddar cremoso e cebola caramelizada.",
+    preco: 27.9,
+    imagem: "https://img.freepik.com/fotos-gratis/vida-morta-de-um-delicioso-hamburguer-americano_23-2149637307.jpg?semt=ais_incoming&w=740&q=80",
+    novo: false,
+  },
+
+  {
+    nome: "Picanha Burguer",
+    descricao: "Picanha grelhada, queijo prato e molho barbecue.",
+    preco: 31.9,
+    imagem: "https://ricksfoodservices.com/wp-content/uploads/2021/08/hamburguer-de-picanha.jpg",
+    novo: true,
+  },
+  {
     nome: "Cheeseburger Clássico",
     descricao: "Carne 150g, queijo cheddar, alface e tomate.",
     preco: 22.9,
@@ -90,21 +105,7 @@ const cardapio = [
     imagem: "https://s2-vogue.glbimg.com/HSrfFZSHwlmhebQ1GW145kRU_Ow=/0x0:620x466/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_5dfbcf92c1a84b20a5da5024d398ff2f/internal_photos/bs/2022/V/i/sHBuE9TCAU2AXQjMwEcQ/2016-04-04-veggie-2.jpg",
     novo: false,
   },
-  {
-    nome: "Cheddar Melt",
-    descricao: "Carne 180g, cheddar cremoso e cebola caramelizada.",
-    preco: 27.9,
-    imagem: "https://img.freepik.com/fotos-gratis/vida-morta-de-um-delicioso-hamburguer-americano_23-2149637307.jpg?semt=ais_incoming&w=740&q=80",
-    novo: false,
-  },
-
-  {
-    nome: "Picanha Burguer",
-    descricao: "Picanha grelhada, queijo prato e molho barbecue.",
-    preco: 31.9,
-    imagem: "https://ricksfoodservices.com/wp-content/uploads/2021/08/hamburguer-de-picanha.jpg",
-    novo: true,
-},
+  
 ]
 </script>
 
