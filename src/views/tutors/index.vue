@@ -102,11 +102,6 @@ const { capturarTutores, tutores, deletarTutor } = useTutor();
 const adicionar = () => {
   router.push({ name: "tutors.add" });
 };
-
-// async function deletarTutor(id) {
-//   await TutorsController.deletar(id);
-//   await capturarTutores();
-// }
 </script>
 
 <style lang="scss" scoped></style>

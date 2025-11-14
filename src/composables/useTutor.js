@@ -17,6 +17,7 @@ export function useTutor(){
 
   const capturarTutores = async () => {
     tutores.value = await TutorsController.listar();
+    console.log(tutores.value);
   }
 
   const deletarTutor = async (id) => {

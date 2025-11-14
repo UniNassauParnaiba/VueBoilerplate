@@ -46,17 +46,19 @@
 <script setup>
 import breadcrumbs from "@/components/breadcrumbs.vue";
 import DBService from "@/services/DBService";
+import { useTutor } from "@/composables/useTutor";
 import Localbase from "localbase";
 import { onMounted, reactive } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
 const router = useRouter();
+const { capturarTutores } = useTutor();
 let db = null;
 
 onMounted(() => {
   db = new Localbase("clinica-veterinaria");
-  capturarTutores();
+  capturarTutor();
 });
 
 const form = reactive({
@@ -71,7 +73,7 @@ const form = reactive({
   },
 });
 
-function capturarTutores() {
+function capturarTutor() {
   DBService.capturarDocumento("tutores", route.params.id).then((document) => {
     form.nomeCompleto = document.nome;
     form.endereco.bairro = document.endereco.bairro;
@@ -83,9 +85,9 @@ function capturarTutores() {
   });
 }
 
-function atualizarTutor() {
+async function atualizarTutor() {
   try {
-    DBService.atualizar("tutores", route.params.id, {
+    await DBService.atualizar("tutores", route.params.id, {
       nome: form.nomeCompleto,
       endereco: {
         bairro: form.endereco.bairro,
@@ -97,6 +99,7 @@ function atualizarTutor() {
         estado: form.endereco.estado,
       },
     });
+    await capturarTutores();
     router.push({ name: "tutors.index" });
   } catch (error) {
     console.log(error);
