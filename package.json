@@ -1,5 +1,5 @@
 {
-  "name": "classroom-components",
+  "name": "easy-kamban",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -10,21 +10,18 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint . --fix"
+    "format": "prettier --write src/"
   },
   "dependencies": {
-    "@primeuix/themes": "^1.2.5",
-    "primevue": "^4.4.1",
+    "dexie": "^4.2.1",
     "vue": "^3.5.22",
-    "vue-router": "^4.5.1"
+    "vue-router": "^4.6.3",
+    "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.33.0",
     "@vitejs/plugin-vue": "^6.0.1",
-    "eslint": "^9.33.0",
-    "eslint-plugin-vue": "~10.4.0",
-    "globals": "^16.3.0",
-    "vite": "^7.1.7",
-    "vite-plugin-vue-devtools": "^8.0.2"
+    "prettier": "3.6.2",
+    "vite": "npm:rolldown-vite@latest",
+    "vite-plugin-vue-devtools": "^8.0.3"
   }
 }
