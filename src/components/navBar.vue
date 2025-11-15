@@ -70,13 +70,12 @@
       <div class="dropdown dropdown-end">
         <label tabindex="0" class="btn btn-ghost btn-circle avatar">
           <div class="w-10 rounded-full">
-            <img src="https://i.pravatar.cc/100?img=5" alt="User avatar" />
+            <img src="https://icon-library.com/images/no-profile-pic-icon/no-profile-pic-icon-7.jpg" alt="User avatar" />
           </div>
         </label>
         <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-          <li><a>Perfil</a></li>
-          <li><a>Configurações</a></li>
-          <li><a class="text-error">Sair</a></li>
+          <li></li>
+          <li><router-link to='/fazerlogin'><a class='login-link'>Fazer Login</a></router-link></li>
         </ul>
       </div>
     </div>

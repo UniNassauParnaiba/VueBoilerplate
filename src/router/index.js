@@ -31,11 +31,13 @@ const router = createRouter({
   path: '/carrinho',
   name: 'Carrinho',
   component: () => import('@/views/CarrinhoView.vue'),
-},
-{
+  },
+  {
   path: '/notificações'
-
-},
+  },
+  {
+  path: '/fazerlogin'
+  },
 ]})
 
 export default router

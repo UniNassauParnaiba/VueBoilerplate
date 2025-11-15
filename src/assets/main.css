@@ -2,3 +2,9 @@
 @plugin "daisyui" {
   themes: all;
 }
+
+/* melhora a usabilidade da font */
+.login-link{
+  font-size: large;
+  font-weight: bolder;
+}
